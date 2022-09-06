@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class ABlob {
 	//Takes in file name and returns string of file contents
+	private String fileName;
 	private static String getFileString(String fileName) throws IOException {
 		//finds file path
 		Path filePath = Path.of(fileName);
@@ -70,10 +71,21 @@ public class ABlob {
 	        }
 	        System.out.println("File Copied");
 	    }
-	//TODO: 1) Make function to create the file into the objects folder in the Git directory function to write the file. 
+	//TODO: 1) Make function to create the file –use createNewFile()– into the objects folder in the Git directory function to write the file. 
 	//TODO: 2) Make constructor that combines these methods and actually makes the Blob
 	public static void main (String[] args) {
 		System.out.println(encryptThisString("Hello World"));
+	}
+	public ABlob (File file) throws Exception, IOException {
+		this.fileName = file.getName();
+		//Step 1: Get string of file contents
+		String fileContents = getFileString(fileName);
+		//Step 2: Encrypt file contents
+		String fileHash = encryptThisString(fileContents);
+		//Step 3: create new file with name of the hash of contents of previous file
+		File newFile = new File(file.getParent(), fileName + ".txt");
+		//Step 4: Copy contents
+		copyContent(file, newFile);
 	}
 	
 }
