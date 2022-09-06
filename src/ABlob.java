@@ -3,20 +3,27 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
-
+import java.util.*;
 public class ABlob {
 	//Takes in file name and returns string of file contents
-	private String fileName;
-	private static String getFileString(String fileName) throws IOException {
+	private static String getFileString(File file) throws IOException {
 		//finds file path
-		Path filePath = Path.of(fileName);
-		//gets file content from file path
-		return Files.readString(filePath);
-	}
+		FileInputStream fis = new FileInputStream(file.getName());
+		byte[] buffer = new byte[10];
+		StringBuilder sb = new StringBuilder();
+		while (fis.read(buffer) != -1) {
+			sb.append(new String(buffer));
+			buffer = new byte[10];
+		}
+		fis.close();
+		return sb.toString();
+}
 
 	private static String encryptThisString(String input) {
         try {
@@ -73,17 +80,21 @@ public class ABlob {
 	    }
 	//TODO: 1) Make function to create the file –use createNewFile()– into the objects folder in the Git directory function to write the file. 
 	//TODO: 2) Make constructor that combines these methods and actually makes the Blob
-	public static void main (String[] args) {
+	public static void main (String[] args) throws IOException {
 		System.out.println(encryptThisString("Hello World"));
+		 File file = new File("TesterFile.txt");
+		    Scanner sc = new Scanner(file);
+		    // we just need to use \\Z as delimiter
+		    sc.useDelimiter("\\Z");
+		    System.out.println(sc.next());
 	}
-	public ABlob (File file) throws Exception, IOException {
-		this.fileName = file.getName();
+	public static void createBlob (File file) throws Exception, IOException {
 		//Step 1: Get string of file contents
-		String fileContents = getFileString(fileName);
+		String fileContents = getFileString(file);
 		//Step 2: Encrypt file contents
 		String fileHash = encryptThisString(fileContents);
 		//Step 3: create new file with name of the hash of contents of previous file
-		File newFile = new File(file.getParent(), fileName + ".txt");
+		File newFile = new File(file.getParent(), fileHash + ".txt");
 		//Step 4: Copy contents
 		copyContent(file, newFile);
 	}
