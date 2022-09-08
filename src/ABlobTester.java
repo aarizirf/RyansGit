@@ -4,10 +4,12 @@ import java.io.*;
 import java.util.*;
 public class ABlobTester {
 	public static void main(String[] args) throws Exception, IOException{
-		Index.init();
-		File testFile = new File("objects/tester.txt");
-		testFile.createNewFile();
+		Index i = new Index();
+		i.init();
+		File testFile = new File("objects/testerFile.txt");
+//		testFile.createNewFile();
 		System.out.println(testFile.getName());
-		Index.add(testFile);
+		i.add(testFile);
+		i.remove(testFile);
 	}
 }
