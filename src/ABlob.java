@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.*;
 public class ABlob {
 	//Takes in file name and returns string of file contents
-	private static String getFileString(File file) throws IOException {
+	public static String getFileString(File file) throws IOException {
 
 		FileInputStream fis = new FileInputStream("objects/" + file.getName());
 		byte[] buffer = new byte[10];
@@ -27,7 +27,7 @@ public class ABlob {
 		return sb.toString();
 }
 
-	private static String encryptThisString(String input) {
+	public static String encryptThisString(String input) {
         try {
             // getInstance() method is called with algorithm SHA-1
             MessageDigest md = MessageDigest.getInstance("SHA-1");
@@ -52,7 +52,7 @@ public class ABlob {
             throw new RuntimeException(e);
         }
 }
-	private static void copyContent(File a, File b) throws Exception
+	public static void copyContent(File a, File b) throws Exception
 	    {
 	        FileInputStream in = new FileInputStream(a);
 	        FileOutputStream out = new FileOutputStream(b);

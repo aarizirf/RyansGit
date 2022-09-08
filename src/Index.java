@@ -11,7 +11,11 @@ public class Index {
 	}
 	public static void add(File file) throws IOException, Exception{
 		ABlob.createBlob(file);
-		
+		String fileString = ABlob.getFileString(file);
+		FileWriter myWriter = new FileWriter("objects/index.txt");
+	      myWriter.write(file.getName() + " --> " + ABlob.encryptThisString(fileString));
+	      myWriter.close();
+	      System.out.println("Successfully wrote to the file.");
 	}
 }
 //Questions for Theiss: creating directory in index

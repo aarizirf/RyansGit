@@ -8,6 +8,6 @@ public class ABlobTester {
 		File testFile = new File("objects/tester.txt");
 		testFile.createNewFile();
 		System.out.println(testFile.getName());
-		ABlob.createBlob(testFile);
+		Index.add(testFile);
 	}
 }
