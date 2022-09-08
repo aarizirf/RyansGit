@@ -1,6 +1,8 @@
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.io.BufferedReader;
@@ -13,7 +15,8 @@ import java.util.*;
 public class ABlob {
 	//Takes in file name and returns string of file contents
 	private static String getFileString(File file) throws IOException {
-		FileInputStream fis = new FileInputStream(file.getName());
+
+		FileInputStream fis = new FileInputStream("objects/" + file.getName());
 		byte[] buffer = new byte[10];
 		StringBuilder sb = new StringBuilder();
 		while (fis.read(buffer) != -1) {
