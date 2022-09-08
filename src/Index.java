@@ -1,9 +1,17 @@
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 public class Index {
 	public static void init() throws IOException {
-		File emptyFile = new File("index.txt");
+		File dir = new File("objects");
+		dir.mkdirs();
+		Path path = Paths.get("objects");
+		File emptyFile = new File(path + "/index.txt");
 		emptyFile.createNewFile();
-		File dir = new File("objects").mkdirs();
+	}
+	public static void add(File file) throws IOException, Exception{
+		ABlob.createBlob(file);
+		
 	}
 }
 //Questions for Theiss: creating directory in index

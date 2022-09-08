@@ -4,7 +4,10 @@ import java.io.*;
 import java.util.*;
 public class ABlobTester {
 	public static void main(String[] args) throws Exception, IOException{
-		File testFile = new File("TesterFile.txt");
+		Index.init();
+		File testFile = new File("objects/tester.txt");
+		testFile.createNewFile();
+		System.out.println(testFile.getName());
 		ABlob.createBlob(testFile);
 	}
 }

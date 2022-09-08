@@ -13,7 +13,6 @@ import java.util.*;
 public class ABlob {
 	//Takes in file name and returns string of file contents
 	private static String getFileString(File file) throws IOException {
-		//finds file path
 		FileInputStream fis = new FileInputStream(file.getName());
 		byte[] buffer = new byte[10];
 		StringBuilder sb = new StringBuilder();
@@ -78,23 +77,21 @@ public class ABlob {
 	        }
 	        System.out.println("File Copied");
 	    }
-	//TODO: 1) Make function to create the file –use createNewFile()– into the objects folder in the Git directory function to write the file. 
-	//TODO: 2) Make constructor that combines these methods and actually makes the Blob
-	public static void main (String[] args) throws IOException {
-		System.out.println(encryptThisString("Hello World"));
-		 File file = new File("TesterFile.txt");
-		    Scanner sc = new Scanner(file);
-		    // we just need to use \\Z as delimiter
-		    sc.useDelimiter("\\Z");
-		    System.out.println(sc.next());
-	}
+//	public static void main (String[] args) throws IOException {
+//		System.out.println(encryptThisString("Hello World"));
+//		 File file = new File("TesterFile.txt");
+//		    Scanner sc = new Scanner(file);
+//		    // we just need to use \\Z as delimiter
+//		    sc.useDelimiter("\\Z");
+//		    System.out.println(sc.next());
+//	}
 	public static void createBlob (File file) throws Exception, IOException {
 		//Step 1: Get string of file contents
 		String fileContents = getFileString(file);
 		//Step 2: Encrypt file contents
 		String fileHash = encryptThisString(fileContents);
 		//Step 3: create new file with name of the hash of contents of previous file
-		File newFile = new File(file.getParent(), fileHash + ".txt");
+		File newFile = new File("objects/" + fileHash + ".txt");
 		//Step 4: Copy contents
 		copyContent(file, newFile);
 	}
