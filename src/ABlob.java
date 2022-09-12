@@ -16,7 +16,7 @@ public class ABlob {
 	//Takes in file name and returns string of file contents
 	public static String getFileString(File file) throws IOException {
 
-		FileInputStream fis = new FileInputStream("objects/" + file.getName());
+		FileInputStream fis = new FileInputStream( file.getName());
 		byte[] buffer = new byte[10];
 		StringBuilder sb = new StringBuilder();
 		while (fis.read(buffer) != -1) {
@@ -95,7 +95,7 @@ public class ABlob {
 		//Step 2: Encrypt file contents
 		String fileHash = encryptThisString(fileContents);
 		//Step 3: create new file with name of the hash of contents of previous file
-		File newFile = new File("objects/" + fileHash + ".txt");
+		File newFile = new File("objects/" + fileHash);
 		//Step 4: Copy contents
 		copyContent(file, newFile);
 	}
