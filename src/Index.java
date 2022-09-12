@@ -8,13 +8,14 @@ private HashMap<String, String> list = new HashMap<String, String>();
 		File dir = new File("objects");
 		dir.mkdirs();
 		Path path = Paths.get("objects");
-		File emptyFile = new File(path + "/index.txt");
+		File emptyFile = new File(path + "/index");
 		emptyFile.createNewFile();
 	}
-	public void add(File file) throws IOException, Exception{
-		ABlob.createBlob(file);
+	public void add(String fileName) throws IOException, Exception{
+		File file = new File(fileName);
+		ABlob.createBlob(fileName);
 		String fileString = ABlob.getFileString(file);
-		FileWriter myWriter = new FileWriter("objects/index.txt");
+		FileWriter myWriter = new FileWriter("objects/index");
 	      myWriter.write(file.getName() + " --> " + ABlob.encryptThisString(fileString));
 	      myWriter.close();
 	      list.put(file.getName(), ABlob.encryptThisString(fileString));
@@ -39,4 +40,3 @@ private HashMap<String, String> list = new HashMap<String, String>();
 		
 	}
 }
-//Questions for Theiss: creating directory in index

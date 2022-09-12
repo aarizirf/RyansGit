@@ -88,8 +88,9 @@ public class ABlob {
 //		    sc.useDelimiter("\\Z");
 //		    System.out.println(sc.next());
 //	}
-	public static void createBlob (File file) throws Exception, IOException {
+	public static void createBlob (String fileName) throws Exception, IOException {
 		//Step 1: Get string of file contents
+		File file = new File(fileName);
 		String fileContents = getFileString(file);
 		//Step 2: Encrypt file contents
 		String fileHash = encryptThisString(fileContents);

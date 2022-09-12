@@ -7,9 +7,9 @@ public class ABlobTester {
 		Index i = new Index();
 		i.init();
 		File testFile = new File("objects/testerFile.txt");
-//		testFile.createNewFile();
+		testFile.createNewFile();
 		System.out.println(testFile.getName());
-		i.add(testFile);
+		i.add(testFile.getName());
 		i.remove(testFile);
 	}
 }
