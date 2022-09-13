@@ -6,10 +6,11 @@ public class ABlobTester {
 	public static void main(String[] args) throws Exception, IOException{
 		Index i = new Index();
 		i.init();
-		File testFile = new File("objects/testerFile.txt");
-//		testFile.createNewFile();
+		File testFile = new File("testerFile.txt");
+		testFile.createNewFile();
+		ABlob.createBlob(testFile.getName());
 		System.out.println(testFile.getName());
-		i.add(testFile);
+		i.add(testFile.getName());
 		i.remove(testFile);
 	}
 }
