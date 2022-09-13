@@ -1,4 +1,5 @@
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,18 +15,22 @@ import java.io.IOException;
 import java.util.*;
 public class ABlob {
 	//Takes in file name and returns string of file contents
-	public static String getFileString(File file) throws IOException {
-
-		FileInputStream fis = new FileInputStream( file.getName());
-		byte[] buffer = new byte[10];
-		StringBuilder sb = new StringBuilder();
-		while (fis.read(buffer) != -1) {
-			sb.append(new String(buffer));
-			buffer = new byte[10];
-		}
-		fis.close();
-		return sb.toString();
-}
+//	public static String getFileString(File file) throws IOException {
+//
+//		FileInputStream fis = new FileInputStream( file.getName());
+//		byte[] buffer = new byte[10];
+//		StringBuilder sb = new StringBuilder();
+//		while (fis.read(buffer) != -1) {
+//			sb.append(new String(buffer));
+//			buffer = new byte[10];
+//		}
+//		fis.close();
+//		return sb.toString();
+//}
+	public static String readFile(String path, Charset encoding) throws IOException {
+        byte[] encoded = Files.readAllBytes(Paths.get(path));
+        return new String(encoded, encoding);
+    }
 
 	public static String encryptThisString(String input) {
         try {
@@ -80,18 +85,19 @@ public class ABlob {
 	        }
 	        System.out.println("File Copied");
 	    }
-//	public static void main (String[] args) throws IOException {
-//		System.out.println(encryptThisString("Hello World"));
+	public static void main (String[] args) throws IOException {
+		System.out.println(encryptThisString("Hello World"));
+		System.out.println(encryptThisString("hi"));
 //		 File file = new File("TesterFile.txt");
 //		    Scanner sc = new Scanner(file);
 //		    // we just need to use \\Z as delimiter
 //		    sc.useDelimiter("\\Z");
 //		    System.out.println(sc.next());
-//	}
+	}
 	public static void createBlob (String fileName) throws Exception, IOException {
 		//Step 1: Get string of file contents
 		File file = new File(fileName);
-		String fileContents = getFileString(file);
+		String fileContents = readFile(fileName, StandardCharsets.US_ASCII);
 		//Step 2: Encrypt file contents
 		String fileHash = encryptThisString(fileContents);
 		//Step 3: create new file with name of the hash of contents of previous file
