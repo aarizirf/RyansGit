@@ -61,16 +61,32 @@ class test_git {
 	
 	@Test
 	void indexInit() {
-		ABlob b = new ABlob();
-		
-		
+		Index i = new Index();	
+		try {
+			i.init();
+			
+//			objects directory exists
+			assertTrue(new File("/objects").exists());
+
+
+//			index file exists
+			assertTrue(new File("index").exists());
+		} catch (Exception e) {}
 	}
 	
 	@Test
 	void indexAdd() {
-		ABlob b = new ABlob();
-		
-		
+		Index i = new Index();
+		try{
+			i.init();
+			i.add(new File(TEST_PATH));
+			
+//			check objects folder
+			assertTrue(new File("/objects/" + TEST_SHA).exists());
+			
+//			check index file
+			
+		} catch(Exception e) {}
 	}
 	
 	@Test
