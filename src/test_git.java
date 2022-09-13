@@ -2,11 +2,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -18,6 +20,7 @@ class test_git {
 	
 	final String TEST_SHA = "c22b5f9178342609428d6f51b2c5af4c0bde6a42";
 	final String TEST_PATH = "test.txt";
+	final String INDEX_PATH = "index.txt";
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -43,20 +46,27 @@ class test_git {
  * - Index.init()
  * - Index.add() 
  * - Index.remove()
+ * 
+ * TODO: Do we need error messages on fails?
  */
 	@Test
 	void blobInit() {
-		ABlob b = new ABlob("test.txt");
-		
-//		look for file in objects directory
-		File f = new File("objects/" + TEST_SHA);
-		assertTrue(f.exists(), "File does not exist");
-		
-//		check contents
-		Path p1 = Path.of("objects/" + TEST_SHA);
-		Path p2 = Path.of(TEST_SHA);
-		
-		assertEquals(-1, filesCompareByLine(p1, p2), "Files are not equal");
+		try {
+			ABlob.createBlob(TEST_PATH);
+			
+//			look for file in objects directory
+			File f = new File("objects/" + TEST_SHA);
+			System.out.println(f.exists());
+			assertTrue(f.exists());
+			
+//			check contents
+			Path p1 = Path.of("objects/" + TEST_SHA);
+			Path p2 = Path.of(TEST_PATH);
+			
+			assertEquals(-1, filesCompareByLine(p1, p2));
+		} catch (Exception e) {
+			fail();
+		}
 	}
 	
 	@Test
@@ -70,28 +80,51 @@ class test_git {
 
 
 //			index file exists
-			assertTrue(new File("index").exists());
-		} catch (Exception e) {}
+			System.out.println("LOL" + new File(INDEX_PATH).exists());
+			assertTrue(new File(INDEX_PATH).exists());
+		} catch (Exception e) {
+			fail();
+		}
 	}
 	
 	@Test
 	void indexAdd() {
 		Index i = new Index();
-		try{
+		try {
 			i.init();
-			i.add(new File(TEST_PATH));
+			i.add(TEST_PATH);
 			
 //			check objects folder
 			assertTrue(new File("/objects/" + TEST_SHA).exists());
 			
 //			check index file
+			HashMap<String, String> map = getMapFromFile(new File(INDEX_PATH));
 			
-		} catch(Exception e) {}
+			assertEquals(map.get(TEST_PATH), TEST_SHA);
+		} catch(Exception e) {
+			fail();
+		}
 	}
+	
+	public HashMap<String, String> getMapFromFile(File file) {
+		HashMap<String, String> map = new HashMap<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                if(line.equals("")) continue;
+                String hash = line.substring(line.length()-39);
+                String filename = line.substring(0, line.length()-42);
+                map.put(filename, hash);
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return map;
+    }
 	
 	@Test
 	void indexRemove() {
-		ABlob b = new ABlob();
+		
 		
 		
 	}

@@ -16,7 +16,7 @@ private HashMap<String, String> list = new HashMap<String, String>();
 		ABlob.createBlob(fileName);
 		String fileString = ABlob.getFileString(file);
 		FileWriter myWriter = new FileWriter("index");
-	      myWriter.write(file.getName() + " --> " + ABlob.encryptThisString(fileString));
+	      myWriter.write(file.getName() + " : " + ABlob.encryptThisString(fileString));
 	      myWriter.close();
 	      list.put(file.getName(), ABlob.encryptThisString(fileString));
 	      System.out.println("Successfully wrote to the file.");
@@ -34,7 +34,7 @@ private HashMap<String, String> list = new HashMap<String, String>();
 		list.remove(file.getName());
 		FileWriter myWriter = new FileWriter("index");
 		for(Map.Entry<String, String> key : list.entrySet()) {
-		      myWriter.write(key + " --> " + list.get(key));
+		      myWriter.write(key + " : " + list.get(key));
 		}
 		myWriter.close();
 		
