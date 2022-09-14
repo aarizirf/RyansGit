@@ -79,7 +79,6 @@ class test_git {
 			assertTrue(new File("objects/").exists());
 
 //			index file exists
-			System.out.println("LOL" + new File(INDEX_PATH).exists());
 			assertTrue(new File(INDEX_PATH).exists());
 		} catch (Exception e) {
 			fail();
