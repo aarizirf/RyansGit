@@ -1,4 +1,5 @@
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -14,7 +15,7 @@ private HashMap<String, String> list = new HashMap<String, String>();
 	public void add(String fileName) throws IOException, Exception{
 		File file = new File(fileName);
 		ABlob.createBlob(fileName);
-		String fileString = ABlob.getFileString(file);
+		String fileString = ABlob.readFile(fileName, StandardCharsets.US_ASCII);
 		FileWriter myWriter = new FileWriter("index");
 	      myWriter.write(file.getName() + " : " + ABlob.encryptThisString(fileString));
 	      myWriter.close();
