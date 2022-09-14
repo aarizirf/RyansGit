@@ -20,7 +20,7 @@ class test_git {
 	
 	final String TEST_SHA = "c22b5f9178342609428d6f51b2c5af4c0bde6a42";
 	final String TEST_PATH = "test.txt";
-	final String INDEX_PATH = "index.txt";
+	final String INDEX_PATH = "index";
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -76,8 +76,7 @@ class test_git {
 			i.init();
 			
 //			objects directory exists
-			assertTrue(new File("/objects").exists());
-
+			assertTrue(new File("objects/").exists());
 
 //			index file exists
 			System.out.println("LOL" + new File(INDEX_PATH).exists());
@@ -95,7 +94,7 @@ class test_git {
 			i.add(TEST_PATH);
 			
 //			check objects folder
-			assertTrue(new File("/objects/" + TEST_SHA).exists());
+			assertTrue(new File("objects/" + TEST_SHA).exists());
 			
 //			check index file
 			HashMap<String, String> map = getMapFromFile(new File(INDEX_PATH));
@@ -112,8 +111,8 @@ class test_git {
             String line;
             while ((line = br.readLine()) != null) {
                 if(line.equals("")) continue;
-                String hash = line.substring(line.length()-39);
-                String filename = line.substring(0, line.length()-42);
+                String hash = line.substring(line.length()-40);
+                String filename = line.substring(0, line.length()-43);
                 map.put(filename, hash);
             }
         } catch (Exception e) {
