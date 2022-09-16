@@ -122,9 +122,22 @@ class test_git {
 	
 	@Test
 	void indexRemove() {
-		
-		
-		
+		Index i = new Index();
+		try {
+			i.init();
+			i.add(TEST_PATH);
+			i.remove(new File(TEST_PATH));
+			
+//			check objects folder
+			assertFalse(new File("objects/" + TEST_SHA).exists());
+			
+//			check index file
+			HashMap<String, String> map = getMapFromFile(new File(INDEX_PATH));
+			
+			assertNotEquals(map.get(TEST_PATH), TEST_SHA);
+		} catch(Exception e) {
+			fail();
+		}
 	}
 	
 	public static long filesCompareByLine(Path path1, Path path2) throws IOException {
