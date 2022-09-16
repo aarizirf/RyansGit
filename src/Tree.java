@@ -37,9 +37,14 @@ public class Tree {
 				sum += "\n";
 			}
 		}
+		
 		String sha = getSHA1(sum);
 	
         try {
+        	if(!new File("objects/").exists()) {
+	        	File dir = new File("objects");
+	    		dir.mkdirs();
+        	}
         	new File("objects/" + sha).delete();
             PrintWriter writer = new PrintWriter("objects/" + sha);
             for (String s : list) {
